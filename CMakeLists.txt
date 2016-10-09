@@ -3,8 +3,12 @@ cmake_minimum_required(VERSION 2.8)
 aux_source_directory(. SRC_LIST)
 add_library(${PROJECT_NAME} ${SRC_LIST})
 
-set (CMAKE_CXX_COMPILER  "/usr/bin/clang++")
-set (CMAKE_CXX_FLAGS     "-Weverything -Wno-c++98-compat -Wno-padded")
+# Warnings
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	set(CMAKE_CXX_FLAGS "-Weverything -Wno-c++98-compat -Wno-padded")
+else()
+	set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Wshadow")
+endif()
 
 # Enable C++14
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
